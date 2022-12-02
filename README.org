@@ -1,0 +1,15 @@
+#+title: Personal Emacs configuration
+
+The fascinating thing about Emacs is how you can explore functionality, be
+inspired by others and slowly create an application that fits your own unique
+needs. This is my own setup. Feel free to take inspiration from it and try in
+your own configuration.
+
+* Programming
+
+This is my scaled-down configuration which supports the languages I currently
+use both in my personal and professional life:
+
+- C++
+- QML
+- Rust
