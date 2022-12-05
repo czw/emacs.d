@@ -59,6 +59,23 @@
 ;; Configure spell checking
 (setq-default ispell-program-name "aspell")
 
+;; When compilation is ordered, save modified files and abort any currently
+;; running compilation. Close the buffer automatically when done unless it
+;; fails.
+(setq-default
+ compilation-always-kill t
+ compilation-ask-about-save nil
+ compilation-scroll-output t)
+(winner-mode 1)
+(setq compilation-finish-functions 'compile-autoclose)
+(defun compile-autoclose (buffer string)
+  (cond ((string-match "finished" string)
+         (bury-buffer "*compilation*")
+         (winner-undo)
+         (message "Build successful"))
+        (t
+         (message "Compilation exited abnormally: %s" string))))
+
 ;; --- User interface things --------------------------------------------------
 ;; This is me!
 (setq-default user-full-name "Jens Bäckman"
