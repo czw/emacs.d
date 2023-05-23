@@ -36,10 +36,13 @@
  initial-scratch-message nil
  inhibit-startup-message t
 
- ;; Make backups of modified files in a separate directory
- delete-old-versions t
- vc-make-backup-files t
- version-control t)
+ ;; Pixelwise resizing feels better for me
+ window-resize-pixelwise t
+ frame-resize-pixelwise t
+
+ ;; Don't create lock files (prefix .#) or backup files (suffix ~)
+ create-lockfiles nil
+ make-backup-files nil)
 
 ;; We really like UTF-8 around here
 (set-language-environment   "UTF-8")
