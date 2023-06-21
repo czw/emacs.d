@@ -95,7 +95,8 @@
 (when (eq system-type 'darwin)
   (global-set-key [kp-delete] 'delete-char) ; fn-delete == right-delete
   (setq mac-command-modifier 'meta
-        mac-option-modifier 'none))
+        mac-option-modifier 'none)
+  (setq insert-directory-program "/usr/local/bin/gls"))
 
 ;; Enable Doom modeline and automatically switch between Solarized dark/light
 (use-package all-the-icons)
