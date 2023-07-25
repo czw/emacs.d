@@ -14,7 +14,9 @@
     (package-refresh-contents)
     (package-install 'use-package))
   (require 'use-package)
-  (setq use-package-always-ensure t))
+  (setq use-package-always-ensure t)
+  (use-package system-packages)
+  (use-package use-package-ensure-system-package))
 
 ;; Keep my Emacs directory as clean as possible
 (use-package no-littering)
@@ -161,7 +163,8 @@
    :configure "cmake -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .."
    :compile "ninja"
    :test "ninja test"))
-(use-package projectile-ripgrep)
+(use-package projectile-ripgrep
+  :ensure-system-package (rg . ripgrep))
 
 ;; Language Server Protocol (LSP) handler. Enables tons of magic interactions
 ;; for many programming languages.
