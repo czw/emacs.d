@@ -1,5 +1,7 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
+;; Things that you should install using your OS package manager: ripgrep
+
 ;;; --- Package handling and settings file locations --------------------------
 ;; Package configuration as well as use-package
 (eval-when-compile
@@ -14,9 +16,7 @@
     (package-refresh-contents)
     (package-install 'use-package))
   (require 'use-package)
-  (setq use-package-always-ensure t)
-  (use-package system-packages)
-  (use-package use-package-ensure-system-package))
+  (setq use-package-always-ensure t))
 
 ;; Keep my Emacs directory as clean as possible
 (use-package no-littering)
@@ -31,6 +31,7 @@
  fill-column 79                ; I work in a few 80-column environments
  indent-tabs-mode nil          ; Prefer spaces to tabs
  require-final-newline t       ; All files should end with a newline
+ ring-bell-function 'ignore    ; Stop annoying sounds
  sentence-end-double-space nil ; Sentences end with a single space where I live
  use-short-answers t           ; y/n instead of yes/no
 
@@ -86,19 +87,23 @@
         (t
          (message "Compilation exited abnormally: %s" string))))
 
-;; --- User interface things --------------------------------------------------
+;;; --- User interface things -------------------------------------------------
 ;; This is me!
 (setq-default user-full-name "Jens Bäckman"
               user-mail-address "jens.backman@me.com")
 
 (setq-default column-number-mode t) ; Show line and column in the mode bar
 
-;; Modify some keyboard thingies when we're using macOS
+;; OS specific: macOS
 (when (eq system-type 'darwin)
   (global-set-key [kp-delete] 'delete-char) ; fn-delete == right-delete
-  (setq mac-command-modifier 'meta
-        mac-option-modifier 'none)
-  (setq insert-directory-program "/usr/local/bin/gls"))
+  (setq insert-directory-program "/usr/local/bin/gls"
+        mac-command-modifier 'meta
+        mac-option-modifier 'none))
+
+;; OS specific: Windows
+(when (eq system-type 'windows-nt)
+  (set-frame-font "DejaVu Sans Mono-10" nil t))
 
 ;; Enable Doom modeline and automatically switch between Solarized dark/light
 (use-package all-the-icons)
@@ -159,12 +164,18 @@
   ;; Add custom commands for CMake projects
   (projectile-register-project-type
    'cmake '("CMakeLists.txt")
+   :project-file "CMakeLists.txt"
    :compilation-dir "build"
    :configure "cmake -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .."
    :compile "ninja"
-   :test "ninja test"))
-(use-package projectile-ripgrep
-  :ensure-system-package (rg . ripgrep))
+   :test "ninja test")
+  (projectile-register-project-type
+   'dotnet-sln '(".vssln")
+   :project-file "?*.sln"
+   :compile "dotnet build"'
+   :run "dotnet run"
+   :test "dotnet test"))
+(use-package projectile-ripgrep)
 
 ;; Language Server Protocol (LSP) handler. Enables tons of magic interactions
 ;; for many programming languages.
