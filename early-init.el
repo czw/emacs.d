@@ -23,9 +23,6 @@
 ;; performance with LSP. The default is 4KB while LSP responses can be huge.
 (setq read-process-output-max (* 1024 1024)) ; 1MB
 
-;; Don't enable package handling until I say so
-(setq package-enable-at-startup nil)
-
 ;; Make minor UI adjustments really early on
 (push '(tool-bar-lines . 0) default-frame-alist)
 (when (featurep 'ns)

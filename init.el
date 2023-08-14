@@ -1,22 +1,10 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-;; Things that you should install using your OS package manager: ripgrep
-
 ;;; --- Package handling and settings file locations --------------------------
 ;; Package configuration as well as use-package
-(eval-when-compile
-  (require 'package)
-  (when (version< emacs-version "28")
-    (add-to-list 'package-archives
-                 '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
-  (package-initialize)
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-  (require 'use-package)
-  (setq use-package-always-ensure t))
+(require 'package)
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+(setq use-package-always-ensure t)
 
 ;; Keep my Emacs directory as clean as possible
 (use-package no-littering)
@@ -106,7 +94,7 @@
   (set-frame-font "DejaVu Sans Mono-10" nil t))
 
 ;; Enable Doom modeline and automatically switch between Solarized dark/light
-(use-package all-the-icons)
+(use-package nerd-icons)
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
 (use-package doom-themes)
