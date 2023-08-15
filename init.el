@@ -1,5 +1,11 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
+;; Check if JSON and built-in native compilation is unavailable.
+(unless (functionp 'json-serialize)
+  (message "Native JSON is *not* available"))
+(unless (and (fboundp 'native-comp-available-p) (native-comp-available-p))
+  (message "Native complation is *not* available"))
+
 ;;; --- Package handling and settings file locations --------------------------
 ;; Package configuration as well as use-package
 (require 'package)
