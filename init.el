@@ -168,6 +168,31 @@
    :test "dotnet test"))
 (use-package projectile-ripgrep)
 
+;;; --- Programming life enhancers --------------------------------------------
+;; Tree-sitter is an incremental parsing system for programming tools. Enables
+;; wider interactions with source code. Language specific grammars must be
+;; installed for this to work.
+(setq major-mode-remap-alist
+      '((bash-mode . bash-ts-mode)
+        (c++-mode . c++-ts-mode)
+        (c-mode . c-ts-mode)
+        (c-or-c++-mode . c-or-c++-ts-mode)
+        (csharp-mode . csharp-mode)
+        (python-mode . python-ts-mode)
+        (rust-mode . rust-ts-mode)))
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (c "https://github.com/tree-sitter/tree-sitter-c")
+        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
+        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")))
+(defun czw/install-treesitter-grammars ()
+  "Install all specified Tree-sitter language grammars"
+  (interactive)
+  (mapc #'treesit-install-language-grammar
+        (mapcar #'car treesit-language-source-alist)))
+
 ;; Language Server Protocol (LSP) handler. Enables tons of magic interactions
 ;; for many programming languages.
 (use-package eglot
