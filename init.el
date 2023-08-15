@@ -3,7 +3,8 @@
 ;;; --- Package handling and settings file locations --------------------------
 ;; Package configuration as well as use-package
 (require 'package)
-(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
 ;; Keep my Emacs directory as clean as possible
