@@ -171,11 +171,16 @@
 ;; Language Server Protocol (LSP) handler. Enables tons of magic interactions
 ;; for many programming languages.
 (use-package eglot
-  :hook ((c-mode-common rust-mode) . eglot-ensure)
-  :config
-  (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
+  :hook (prog-mode . czw/eglot-ensure)
+  :bind
+  (("C-c e f" . eglot-format)
+   ("C-c e r" . eglot-rename))
   :custom
   (eglot-autoshutdown t))
+(defun czw/eglot-ensure ()
+  "Start Eglot session for current buffer unless it's in a blacklisted mode."
+  (unless (string= "emacs-lisp-mode" major-mode)
+    (eglot-ensure)))
 
 ;; Code templates, mostly used in conjunction with the LSP but can be useful on
 ;; its own generating long, boring boilerplate code.
