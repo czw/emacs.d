@@ -159,6 +159,9 @@
   :bind-keymap ("C-c p" . projectile-command-map)
   :hook (after-init . projectile-mode)
   :config
+  (add-to-list 'projectile-globally-ignored-directories "^elpa$")
+  (add-to-list 'projectile-globally-ignored-directories "^node_modules$")
+  (add-to-list 'projectile-globally-ignored-directories "^target$")
   ;; Add custom commands for CMake projects
   (projectile-register-project-type
    'cmake '("CMakeLists.txt")
