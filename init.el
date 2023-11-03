@@ -82,23 +82,26 @@
         (t
          (message "Compilation exited abnormally: %s" string))))
 
+;;; --- Operating system specific alterations ---------------------------------
+;; GNU/Linux
+(when (eq system-type 'gnu/linux)
+  (set-frame-font "Hack-10.5" nil t))
+;; macOS
+(when (eq system-type 'darwin)
+  (global-set-key [kp-delete] 'delete-char) ; fn-delete == right-delete
+  (setq insert-directory-program "/usr/local/bin/gls"
+        mac-command-modifier 'meta
+        mac-option-modifier 'none))
+;; Windows
+(when (eq system-type 'windows-nt)
+  (set-frame-font "Cascadia Mono-10.5" nil t))
+
 ;;; --- User interface things -------------------------------------------------
 ;; This is me!
 (setq-default user-full-name "Jens Bäckman"
               user-mail-address "jens.backman@me.com")
 
 (setq-default column-number-mode t) ; Show line and column in the mode bar
-
-;; OS specific: macOS
-(when (eq system-type 'darwin)
-  (global-set-key [kp-delete] 'delete-char) ; fn-delete == right-delete
-  (setq insert-directory-program "/usr/local/bin/gls"
-        mac-command-modifier 'meta
-        mac-option-modifier 'none))
-
-;; OS specific: Windows
-(when (eq system-type 'windows-nt)
-  (set-frame-font "DejaVu Sans Mono-10" nil t))
 
 ;; Enable Doom modeline and automatically switch between Solarized dark/light
 (use-package doom-themes)
