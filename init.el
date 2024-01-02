@@ -239,27 +239,6 @@
   (setq yas-snippet-dirs '("~/.emacs.d/snippets")))
 
 ;;; --- Language specific -----------------------------------------------------
-(use-package cc-mode
-  :ensure nil
-  :hook (c-mode-common . (lambda () (c-set-style "Thoreb")))
-  :config
-  (c-add-style "Thoreb"
-               '("bsd"
-                 (c-basic-offset . 4)
-                 (c-tab-always-indent . t)
-                 (c-offsets-alist
-                  (arglist-intro . 8)
-                  (case-label    . 4)
-                  (innamespace   . 0)
-                  (stream-op     . c-lineup-streamop))
-                 (indent-tabs-mode . nil))))
-(use-package cmake-mode
-  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
-         ("\\.cmake\\'"         . cmake-mode))
-  :custom
-  (cmake-tab-width 4))
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode))
-(use-package qml-mode
-  :mode "\\.qml\\'")
 (use-package rust-mode)
