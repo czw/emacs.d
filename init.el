@@ -242,3 +242,33 @@
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode))
 (use-package rust-mode)
+
+;;; --- Org mode --------------------------------------------------------------
+(require 'org)
+(setq org-agenda-files '("~/doc/org"))
+
+;; Make the indentation look nicer
+(add-hook 'org-mode-hook 'org-indent-mode)
+
+;; Hide tasks that are scheduled in the future.
+(setq org-agenda-todo-ignore-scheduled 'future)
+(setq org-agenda-tags-todo-honor-ignore-options t)
+
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+(global-set-key (kbd "C-c l") #'org-store-link)
+(setq org-capture-templates
+      '(("t" "Allmän att-göra-notering"
+         entry (file+headline "~/doc/org/todo.org" "Inbox")
+         "* TODO %?\n"
+         :empty-lines 0)
+        ))
+(setq org-todo-keywords
+      '((sequence
+         "TODO(t)"
+         "NEXT(n)"
+         "STARTED(s)"
+         "DELEGATED(e)"
+         "|"
+         "DONE(d)")))
+(setq org-clock-in-switch-to-state "STARTED")
