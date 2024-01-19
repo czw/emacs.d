@@ -254,21 +254,27 @@
 (setq org-agenda-todo-ignore-scheduled 'future)
 (setq org-agenda-tags-todo-honor-ignore-options t)
 
+(setq org-directory "~/doc/org")
+
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c l") #'org-store-link)
 (setq org-capture-templates
-      '(("t" "Allmän att-göra-notering"
-         entry (file+headline "~/doc/org/todo.org" "Inbox")
+      '(("d" "Deferred task → Inbox"
+         entry (file "~/doc/org/inbox.org")
+         "* DEFERRED %?\n"
+         :empty-lines 0)
+        ("t" "Task → Inbox"
+         entry (file "~/doc/org/inbox.org")
          "* TODO %?\n"
          :empty-lines 0)
         ))
 (setq org-todo-keywords
-      '((sequence
-         "TODO(t)"
-         "NEXT(n)"
-         "STARTED(s)"
-         "DELEGATED(e)"
-         "|"
-         "DONE(d)")))
+      '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|"
+         "DONE(d)" "DELEGATED(e)" "DEFERRED(f)")))
 (setq org-clock-in-switch-to-state "STARTED")
+(setq org-refile-targets '(("jgz.org" :maxlevel . 2)
+                           ("jobb.org" :maxlevel . 2)
+                           ("privat.org" :maxlevel . 2)))
+(setq org-refile-use-outline-path t)
+(setq org-outline-path-complete-in-steps nil)
