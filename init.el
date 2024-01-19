@@ -260,15 +260,16 @@
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c l") #'org-store-link)
 (setq org-capture-templates
-      '(("d" "Deferred task → Inbox"
+      '(("b" "Bug → Jobb/Buggar"
+         entry (file+headline "~/doc/org/jobb.org" "Buggar")
+         "* TODO [#A] %?\n- Kund:\n- Beskrivning:\n- Felorsak:\n- Lösning:\n"
+         :clock-in t)
+        ("d" "Deferred task → Inbox"
          entry (file "~/doc/org/inbox.org")
-         "* DEFERRED %?\n"
-         :empty-lines 0)
+         "* DEFERRED %?\n")
         ("t" "Task → Inbox"
          entry (file "~/doc/org/inbox.org")
-         "* TODO %?\n"
-         :empty-lines 0)
-        ))
+         "* TODO %?\n")))
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|"
          "DONE(d)" "DELEGATED(e)" "DEFERRED(f)")))
