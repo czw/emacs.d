@@ -216,7 +216,8 @@
 (use-package eglot
   :hook (prog-mode . czw/eglot-ensure)
   :bind
-  (("C-c e f" . eglot-format)
+  (("C-c e a" . eglot-code-actions)
+   ("C-c e f" . eglot-format)
    ("C-c e r" . eglot-rename))
   :custom
   (eglot-autoshutdown t))
