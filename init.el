@@ -104,7 +104,7 @@
 (setq-default column-number-mode t) ; Show line and column in the mode bar
 
 ;; Enable Doom modeline and automatically switch between Solarized dark/light
-(use-package doom-themes)
+(use-package solarized-theme)
 (if (display-graphic-p)
   (progn
     (use-package nerd-icons)
@@ -112,10 +112,9 @@
       :hook (after-init . doom-modeline-mode))
     (use-package auto-dark
       :init
-      (setq auto-dark-dark-theme 'doom-solarized-dark)
-      (setq auto-dark-light-theme 'doom-solarized-light)
-      (auto-dark-mode t)))
-  (load-theme 'doom-solarized-light))
+      (setq auto-dark-dark-theme 'solarized-dark)
+      (setq auto-dark-light-theme 'solarized-light)
+      (auto-dark-mode t))))
 
 ;; In order to help me explore and verify key bindings, I'm using which-key.
 ;; As soon as I press a key binding like C-c and wait for a while, a panel
