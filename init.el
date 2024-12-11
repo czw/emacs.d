@@ -184,31 +184,31 @@
 ;; Tree-sitter is an incremental parsing system for programming tools. Enables
 ;; wider interactions with source code. Language specific grammars must be
 ;; installed for this to work.
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 (setq major-mode-remap-alist
       '((bash-mode . bash-ts-mode)
-        (c++-mode . c++-ts-mode)
-        (c-mode . c-ts-mode)
-        (c-or-c++-mode . c-or-c++-ts-mode)
-        (csharp-mode . csharp-ts-mode)
         (js-mode . js-ts-mode)
         (python-mode . python-ts-mode)
-        (rust-mode . rust-ts-mode)))
+        (rust-mode . rust-ts-mode)
+        (sh-mode . bash-ts-mode)))
+(dolist (mode '(("\\.ts\\'" . typescript-ts-mode)
+                ("\\.tsx\\'" . tsx-ts-mode)
+                ("\\.ya?ml\\'" . yaml-ts-mode)))
+  (add-to-list 'auto-mode-alist mode))
 (setq treesit-language-source-alist
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-        (c "https://github.com/tree-sitter/tree-sitter-c")
-        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
-        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
         (python "https://github.com/tree-sitter/tree-sitter-python")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml/" "master" "src")))
 (defun czw/install-treesitter-grammars ()
   "Install all specified Tree-sitter language grammars"
   (interactive)
-  (mapc #'treesit-install-language-grammar
-        (mapcar #'car treesit-language-source-alist)))
+  (dolist (lang treesit-language-source-alist)
+    (condition-case err
+        (treesit-install-language-grammar (car lang))
+      (error (message "Failed to install %s: %s" (car lang) err)))))
 
 ;; Language Server Protocol (LSP) handler. Enables tons of magic interactions
 ;; for many programming languages.
