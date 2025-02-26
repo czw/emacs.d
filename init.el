@@ -89,7 +89,7 @@
 ;; macOS
 (when (eq system-type 'darwin)
   (global-set-key [kp-delete] 'delete-char) ; fn-delete == right-delete
-  (setq insert-directory-program "/usr/local/bin/gls"
+  (setq insert-directory-program "/opt/homebrew/bin/gls"
         mac-command-modifier 'meta
         mac-option-modifier 'none))
 ;; Windows
@@ -120,9 +120,7 @@
 ;; As soon as I press a key binding like C-c and wait for a while, a panel
 ;; will appear and display all bindings under that prefix and which command
 ;; they run.
-(use-package which-key
-  :config
-  (which-key-mode))
+(which-key-mode)
 
 ;;; --- Various useful packages for navigation, editing and general work ------
 ;; Git support through the excellent Magit package
