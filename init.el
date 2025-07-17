@@ -112,8 +112,7 @@
       :hook (after-init . doom-modeline-mode))
     (use-package auto-dark
       :init
-      (setq auto-dark-dark-theme 'solarized-dark)
-      (setq auto-dark-light-theme 'solarized-light)
+      (setq auto-dark-themes '((solarized-dark) (solarized-light)))
       (auto-dark-mode t))))
 
 ;; In order to help me explore and verify key bindings, I'm using which-key.
