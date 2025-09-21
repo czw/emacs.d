@@ -192,8 +192,11 @@
                 ("\\.ya?ml\\'" . yaml-ts-mode)))
   (add-to-list 'auto-mode-alist mode))
 (setq treesit-language-source-alist
-      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+      '((astro "https://github.com/virchau13/tree-sitter-astro")
+        (bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
         (python "https://github.com/tree-sitter/tree-sitter-python")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
@@ -215,6 +218,13 @@
   (("C-c e a" . eglot-code-actions)
    ("C-c e f" . eglot-format)
    ("C-c e r" . eglot-rename))
+  :config
+  (add-to-list 'eglot-server-programs
+               '(astro-ts-mode . ("astro-ls" "--stdio"
+                                  :initializationOptions
+                                  (:typescript (:tsdk "./node_modules/typescript/lib")))))
+  :init
+  (add-hook 'astro-ts-mode-hook 'eglot-ensure)
   :custom
   (eglot-autoshutdown t))
 (defun czw/eglot-ensure ()
@@ -236,6 +246,9 @@
   (setq yas-snippet-dirs '("~/.emacs.d/snippets")))
 
 ;;; --- Language specific -----------------------------------------------------
+(use-package astro-ts-mode
+  :mode "\\.astro\\'")
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode))
 (use-package rust-mode)
+(use-package web-mode)
